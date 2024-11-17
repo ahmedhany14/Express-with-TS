@@ -1,4 +1,5 @@
 import { AppRouter } from "../../routes/appRouter";
+import { methods } from "./methods";
 
 const router = AppRouter.getInstance();
 
@@ -8,8 +9,9 @@ export function Controller(routePrefix: string) {
 
         for (let key of routeHandlers) {
             const path = Reflect.getMetadata('path', target.prototype, key);
+            const method: methods = Reflect.getMetadata('method', target.prototype, key);
             if (path)
-                router.get(`${routePrefix}${path}`, target.prototype[key]);
+                router[method](`${routePrefix}${path}`, target.prototype[key]);
         }
     }
 }
