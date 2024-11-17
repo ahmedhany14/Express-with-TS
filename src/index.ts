@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import cookieSession from 'cookie-session';
 
 import { LogInRouter } from './routes/LoginRoutes';
+import { AppRouter } from './routes/appRouter';
+
+import './Controllers/LoginController';
 import bodyParser = require('body-parser');
 dotenv.config({ path: ".config.env" });
 
@@ -35,6 +38,8 @@ app.get('/',
             `);
     });
 app.use("/", LogInRouter);
+
+app.use('/', AppRouter.getInstance());
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
