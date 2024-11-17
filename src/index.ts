@@ -33,7 +33,7 @@ app.get('/',
             response.send(`
                 <div>
                     <div>You are not logged in</div>
-                    <a href="/login">Login</a>
+                    <a href="/auth/login">Login</a>
                 </div>
             `);
     });
