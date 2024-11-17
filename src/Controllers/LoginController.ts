@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { Get, Post } from './Decorators/routes';
 import { Controller } from './Decorators/controller';
-import { testUSE } from './middlewares/logRequest';
-import { use } from './Decorators/use';
 import { validator } from './Decorators/validator';
-import { CheckBody } from './middlewares/CheckBody';
+
+interface RequestWithBody extends Request {
+    user?: { email: string, password: string };
+}
 @Controller('/auth')
 class Login {
     @Get('/login')
@@ -33,6 +34,12 @@ class Login {
         if (!(email === "ahmed@hotmail.com" && password === "1234"))
             response.send("Email or password is incorrect");
         request.session = { loggedIn: true };
+        response.redirect("/");
+    }
+
+    @Get('/logout')
+    public logout(request: Request, response: Response): void {
+        request.session = undefined;
         response.redirect("/");
     }
 } 
